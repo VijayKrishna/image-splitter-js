@@ -19,7 +19,7 @@ document.getElementById('imageUpload').addEventListener('change', function(event
             const halfHeight = img.height / 2;
 
             const quads = document.getElementById('quadrants');
-            quads.setAttribute('style', '');
+            quads.style.display = 'block';
 
             // Create images from quadrants
             createQuadrantImage(canvas, 0, 0, halfWidth, halfHeight, 'quad1');
