@@ -18,26 +18,30 @@ document.getElementById('imageUpload').addEventListener('change', function(event
             const halfWidth = img.width / 2;
             const halfHeight = img.height / 2;
 
-            // Draw each quadrant onto its own canvas
-            drawQuadrant(canvas, ctx, 0, 0, halfWidth, halfHeight, 'quad1');
-            drawQuadrant(canvas, ctx, halfWidth, 0, halfWidth, halfHeight, 'quad2');
-            drawQuadrant(canvas, ctx, 0, halfHeight, halfWidth, halfHeight, 'quad3');
-            drawQuadrant(canvas, ctx, halfWidth, halfHeight, halfWidth, halfHeight, 'quad4');
+            const quads = document.getElementById('quadrants');
+            quads.setAttribute('style', '');
+
+            // Create images from quadrants
+            createQuadrantImage(canvas, 0, 0, halfWidth, halfHeight, 'quad1');
+            createQuadrantImage(canvas, halfWidth, 0, halfWidth, halfHeight, 'quad2');
+            createQuadrantImage(canvas, 0, halfHeight, halfWidth, halfHeight, 'quad3');
+            createQuadrantImage(canvas, halfWidth, halfHeight, halfWidth, halfHeight, 'quad4');
         }
     }
 });
 
-function drawQuadrant(sourceCanvas, sourceCtx, startX, startY, width, height, targetCanvasId) {
+function createQuadrantImage(sourceCanvas, startX, startY, width, height, targetImgId) {
     const targetImg = document.getElementById(targetImgId);
-    const targetCanvas = document.createElement('canvas');
-
-    const targetCtx = targetCanvas.getContext('2d');
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
 
     // Set canvas size to match the quadrant size
-    targetCanvas.width = width;
-    targetCanvas.height = height;
+    tempCanvas.width = width;
+    tempCanvas.height = height;
 
-    // Draw the specific quadrant from the original image
-    targetCtx.drawImage(sourceCanvas, startX, startY, width, height, 0, 0, width, height);
+    // Draw the specific quadrant from the original image onto the temporary canvas
+    tempCtx.drawImage(sourceCanvas, startX, startY, width, height, 0, 0, width, height);
+
+    // Convert the quadrant to a data URL and set it as the source of the target img element
     targetImg.src = tempCanvas.toDataURL();
 }
