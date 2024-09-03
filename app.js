@@ -28,7 +28,9 @@ document.getElementById('imageUpload').addEventListener('change', function(event
 });
 
 function drawQuadrant(sourceCanvas, sourceCtx, startX, startY, width, height, targetCanvasId) {
-    const targetCanvas = document.getElementById(targetCanvasId);
+    const targetImg = document.getElementById(targetImgId);
+    const targetCanvas = document.createElement('canvas');
+
     const targetCtx = targetCanvas.getContext('2d');
 
     // Set canvas size to match the quadrant size
@@ -37,4 +39,5 @@ function drawQuadrant(sourceCanvas, sourceCtx, startX, startY, width, height, ta
 
     // Draw the specific quadrant from the original image
     targetCtx.drawImage(sourceCanvas, startX, startY, width, height, 0, 0, width, height);
+    targetImg.src = tempCanvas.toDataURL();
 }
